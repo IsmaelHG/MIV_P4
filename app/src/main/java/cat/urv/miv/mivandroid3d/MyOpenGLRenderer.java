@@ -14,11 +14,16 @@ public class MyOpenGLRenderer implements Renderer {
 	private Object3D sphere;
 	private Light l1, l2, l3;
 
+	// P4
+	private GL10 gl;
+
 	public MyOpenGLRenderer(Context context){
 		this.context = context;
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		this.gl = gl;
+
 		// Image Background color
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 
@@ -39,6 +44,12 @@ public class MyOpenGLRenderer implements Renderer {
         l1.setDiffuseColor(new float[]{1.0f,0.0f,0.0f});
         l1.enable();
 
+		// Camera
+		CameraManager.start(gl);
+
+		// Start functionality switcher
+		//StateManager.start(this, PS);
+
 	}
 
 	public void onDrawFrame(GL10 gl) {
@@ -47,6 +58,9 @@ public class MyOpenGLRenderer implements Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
 		gl.glLoadIdentity();
+
+		// Camara set up
+		CameraManager.look();
 
 		//Draw the sphere
 		gl.glTranslatef(0,0,-6.0f);

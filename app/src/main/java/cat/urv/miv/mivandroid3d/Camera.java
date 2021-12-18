@@ -21,32 +21,68 @@ public class Camera {
 	public void moveLeft(float inc) {
 		pos = pos.add( side.normalize().mult(-inc) );
 	}
-	
+
 	public void moveRight(float inc) {
+		pos = pos.add( side.normalize().mult(inc) );
 	}
-	
+
 	public void moveUp(float inc) {
+		pos = pos.add( up.normalize().mult(inc) );
 	}
-	
+
 	public void moveDown(float inc) {
+		pos = pos.add( up.normalize().mult(-inc) );
 	}
-	
+
 	public void moveForward(float inc) {
+		pos = pos.add(forward.normalize().mult(inc));
 	}
-	
+
 	public void moveBackward(float inc) {
+		pos = pos.add(forward.normalize().mult(-inc));
 	}
-	
+
 	public void yaw(float angle) {
+		rotate(-angle, up.get(0), up.get(1), up.get(2));
 	}
-	
+
 	public void pitch(float angle) {
+		rotate(angle, side.get(0), side.get(1), side.get(2));
 	}
-	
+
 	public void roll(float angle) {
+		rotate(angle, forward.get(0), forward.get(1), forward.get(2));
 	}
-	
+
+	private Vertex4 mulVectorMatrix (Vertex4 vector, float[][] matrix) {
+		Vertex4 destination = new Vertex4();
+		float value;
+		for (int i = 0; i < 4; i++) {
+			value = 0;
+			for (int j = 0; j < 4; j++) {
+				value += vector.get(j) * matrix[i][j];
+			}
+			destination.set(i, value);
+		}
+		return destination;
+	}
+
 	private void rotate(float angle, float x, float y, float z) {
+
+		angle = (float) Math.toRadians(angle);
+		float c = (float) Math.cos(angle);
+		float s =(float) Math.sin(angle);;
+
+		float[][] rotationMatrix = { { x*x*(1-c)+c, x*y*(1-c)-z*s, x*z*(1-c)+y*s, 0},
+				{ y*x*(1-c)+z*s, y*y*(1-c)+c, y*z*(1-c)-x*s, 0},
+				{ x*z*(1-c)-y*s, y*z*(1-c)+x*s, z*z*(1-c)+c, 0},
+				{ 0, 0, 0, 1}
+		};
+
+		forward = mulVectorMatrix(forward, rotationMatrix).normalize();
+		side = mulVectorMatrix(side, rotationMatrix).normalize();
+		up = mulVectorMatrix(up, rotationMatrix).normalize();
+
 	}
 	
 	public void look()
