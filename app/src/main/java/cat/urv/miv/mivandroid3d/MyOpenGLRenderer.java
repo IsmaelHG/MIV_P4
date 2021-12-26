@@ -13,7 +13,7 @@ import java.nio.FloatBuffer;
 public class MyOpenGLRenderer implements Renderer {
 
 	private Context context;
-	private Object3D monkey, cube, cube2;
+	private Object3D car, cube, cube2, streetlight, earth, ground;
 	private Light l0, l1, l2;
 
 	// P4
@@ -33,13 +33,13 @@ public class MyOpenGLRenderer implements Renderer {
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 
 		//Enable Smooth Shading
-		gl.glShadeModel(GL10.GL_FLAT);
+		gl.glShadeModel(GL10.GL_SMOOTH);
 
 		//Enable Lights
 		gl.glEnable(GL10.GL_LIGHTING);
 
 		// Monke
-        monkey = new Object3D(context, R.raw.monkey);
+        car = new Object3D(context, R.raw.car);
 
         // Cube
 		cube = new Object3D(context, R.raw.cube);
@@ -47,31 +47,51 @@ public class MyOpenGLRenderer implements Renderer {
 		// Cube2
 		cube2 = new Object3D(context, R.raw.cube);
 
+		// Street Light
+		streetlight = new Object3D(context, R.raw.streetlight);
+
+		// Ground
+		ground = new Object3D(context, R.raw.plane);
+
+		// test
+		//earth = new Object3D(context, R.raw.earth);
+
         // Light 0
         l0 = new Light(gl, GL10.GL_LIGHT0);
         l0.setPosition(new float[]{2.5f,0.0f,0.0f,0.0f});
         l0.setAmbientColor(new float[]{0.2f,0.2f,0.2f});
         l0.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
-        l0.enable();
+        //l0.enable();
 
 		// Light 1
 		l1 = new Light(gl, GL10.GL_LIGHT1);
 		l1.setPosition(new float[]{-2.5f,0.0f,0.0f,0.0f});
 		l1.setAmbientColor(new float[]{0.2f,0.2f,0.2f});
 		l1.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
-		l1.enable();
+		//l1.enable();
+
+		// Light 3
+		l2 = new Light(gl, GL10.GL_LIGHT2);
+		l2.setPosition(new float[]{0.12f,3.5f,0.0f,0.0f});
+		l2.setAmbientColor(new float[]{0.2f,0.2f,0.2f});
+		l2.setDiffuseColor(new float[]{0.5f,0.5f,0.5f});
+		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-0.2f,-6.0f}));
+		//gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_CUTOFF,20);
+		//gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_EXPONENT,2.0f);
+		//gl.glLightf(GL10.GL_LIGHT2,GL10.GL_LINEAR_ATTENUATION, 1);
+		l2.enable();
 
 		// Camera
 		CameraManager.start(gl);
-
-		CameraManager.setCamPosition(new Vertex4(0.0f, 5.5f, -2.85f, 1.0f),
-				new Vertex4(0.0f, -0.85f, -0.5f, 0.0f),
-				new Vertex4(0.0f, 0.5f, -0.85f, 0.0f),
-				new Vertex4(1.0f, 0.0f, 0.0f, 0.0f),
+		// Set second camera
+		CameraManager.setCamPosition(new Vertex4(7.2f, 4.7f, -12.3f, 1.0f),
+				new Vertex4(-0.75f, -0.2f, 0.62f, 0.0f),
+				new Vertex4(-0.15f, 0.9f, 0.13f, 0.0f),
+				new Vertex4(-0.65f, 0.0f, -0.75f, 0.0f),
 				1);
 
 		// Ambient Light
-		gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f}));
+		//gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f}));
 
 		// Start functionality switcher
 		//StateManager.start(this, PS);
@@ -88,9 +108,16 @@ public class MyOpenGLRenderer implements Renderer {
 		// Camara set up
 		CameraManager.look();
 
-		//Draw the monkey
+		//Draw the car
 		gl.glTranslatef(0,0,-6.0f);
-		monkey.draw(gl);
+		car.draw(gl);
+
+		// Draw the light
+		gl.glPushMatrix();
+		gl.glScalef(0.3f,0.3f,0.3f);
+		gl.glTranslatef(-7.0f,0.0f,0.0f);
+		streetlight.draw(gl);
+		gl.glPopMatrix();
 
 		//Draw Cube 1
 		gl.glPushMatrix();
@@ -102,6 +129,21 @@ public class MyOpenGLRenderer implements Renderer {
 		gl.glPushMatrix();
 		gl.glTranslatef(2.5f,0,0.0f);
 		cube2.draw(gl);
+		gl.glPopMatrix();
+
+		//Draw test
+		/*
+		gl.glPushMatrix();
+		gl.glTranslatef(0.12f,3.8f,0.0f);
+		gl.glScalef(0.03f,0.03f,0.03f);
+		earth.draw(gl);
+		gl.glPopMatrix();
+		 */
+
+		gl.glPushMatrix();
+		//gl.glTranslatef(0.12f,3.8f,0.0f);
+		//gl.glScalef(0.03f,0.03f,0.03f);
+		ground.draw(gl);
 		gl.glPopMatrix();
 	}
 

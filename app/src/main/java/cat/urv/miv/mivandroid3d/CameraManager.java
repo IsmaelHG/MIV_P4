@@ -10,7 +10,7 @@ public class CameraManager {
 
     public static int MAX_NUM_CAMERAS = 2;
     public static int FIRST_CAMERA = 0;
-    public static float MOVE_SPEED = 0.02f;
+    public static float MOVE_SPEED = 0.08f;
     public static float MOVE_FREQUENCY = 20f;
     public static float ROTATE_ANGLE = 2f;
     private static Camera[] cameras;

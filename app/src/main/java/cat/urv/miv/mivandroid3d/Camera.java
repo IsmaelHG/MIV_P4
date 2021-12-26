@@ -27,13 +27,11 @@ public class Camera {
 	
 	public void moveLeft(float inc) {
 		pos = pos.add( side.normalize().mult(-inc) );
-		/*
 		System.out.println(pos);
 		System.out.println(forward);
 		System.out.println(up);
 		System.out.println(side);
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		*/
 	}
 
 	public void moveRight(float inc) {
