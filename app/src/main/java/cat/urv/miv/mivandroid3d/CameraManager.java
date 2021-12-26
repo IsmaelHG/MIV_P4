@@ -69,40 +69,41 @@ public class CameraManager {
 
     }
 
-    /*
     public static void inverse_yaw(float angle) {
         if (started_cameras)
             current_camera.inverse_yaw(angle);
 
     }
-    */
 
     public static void pitch(float angle) {
         if (started_cameras)
             current_camera.pitch(angle);
     }
 
-    /*
     public static void inverse_pitch(float angle) {
         if (started_cameras)
             current_camera.inverse_pitch(angle);
     }
-     */
 
     public static void roll(float angle) {
         if (started_cameras)
             current_camera.roll(angle);
     }
 
-    /*
     public static void inverse_roll(float angle) {
         if (started_cameras)
             current_camera.inverse_roll(angle);
     }
-    */
 
     public static int getCurrent_camera_number() {
         return current_camera_number;
+    }
+
+    public static void setCamPosition(Vertex4 pos, Vertex4 forward, Vertex4 up, Vertex4 side, int cam) {
+        if (started_cameras)
+            if ( (cam < MAX_NUM_CAMERAS) && (cam >= 0) ) {
+                cameras[cam].setPosition(pos,forward,up,side);
+            }
     }
 
     public static void look()

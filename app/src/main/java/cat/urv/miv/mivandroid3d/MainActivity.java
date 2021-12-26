@@ -52,7 +52,6 @@ public class MainActivity extends Activity {
                 case KeyEvent.KEYCODE_C:
                     CameraManager.switch_camera();
                     break;
-                /*
                 case KeyEvent.KEYCODE_H:
                     CameraManager.inverse_yaw(CameraManager.ROTATE_ANGLE);
                     break;
@@ -62,6 +61,7 @@ public class MainActivity extends Activity {
                 case KeyEvent.KEYCODE_F:
                     CameraManager.inverse_roll(CameraManager.ROTATE_ANGLE);
                     break;
+                /*
                 case KeyEvent.KEYCODE_1:
                     StateManager.switchFog();
                     break;
