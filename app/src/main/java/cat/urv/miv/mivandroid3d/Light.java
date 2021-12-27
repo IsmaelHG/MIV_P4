@@ -48,4 +48,10 @@ public class Light {
 		gl.glLightfv(lightid, GL10.GL_DIFFUSE, difuse);
 	}
 
+	public void draw(){
+		gl.glLightfv( lightid, gl.GL_POSITION, posicio );
+		gl.glLightfv( lightid, gl.GL_AMBIENT, ambient );
+		gl.glLightfv( lightid, gl.GL_DIFFUSE, difuse );
+	}
+
 }

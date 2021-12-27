@@ -106,8 +106,8 @@ public class CameraManager {
             }
     }
 
-    public static void look()
+    public static Vertex4[] look()
     {
-        current_camera.look();
+        return current_camera.look();
     }
 }

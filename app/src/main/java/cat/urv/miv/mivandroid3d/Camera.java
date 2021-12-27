@@ -106,12 +106,14 @@ public class Camera {
 
 	}
 	
-	public void look()
+	public Vertex4[] look()
 	{
 		Vertex4 center = pos.add(forward);
 
 		GLU.gluLookAt(gl, pos.get(0), pos.get(1), pos.get(2), 
 						  center.get(0), center.get(1), center.get(2), 
 						  up.get(0), up.get(1), up.get(2));
+		Vertex4[] centerrotat = {center,up};
+		return centerrotat;
 	}
 }
