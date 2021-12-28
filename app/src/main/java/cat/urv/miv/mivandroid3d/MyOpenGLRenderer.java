@@ -91,8 +91,14 @@ public class MyOpenGLRenderer implements Renderer {
 				new Vertex4(-0.65f, 0.0f, -0.75f, 0.0f),
 				1);
 
+		CameraManager.setCamPosition(new Vertex4(0.0f, 2.0f, 0.0f, 1.0f),
+				new Vertex4(0.0f, 0.0f, -1.0f, 0.0f),
+				new Vertex4(0.0f, 1.0f, 0.0f, 0.0f),
+				new Vertex4(1.0f, 0.0f, 0.0f, 0.0f),
+				0);
+
 		// Ambient Light
-		//gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f}));
+		gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{0.7f,0.7f,0.7f}));
 
 		// Start functionality switcher
 		//StateManager.start(this, PS);
@@ -126,26 +132,26 @@ public class MyOpenGLRenderer implements Renderer {
 		//gl.glPopMatrix();
 
 		//Draw the car
-		gl.glTranslatef(0,0,-6.0f);
+		gl.glTranslatef(0,-0.7f,-10.0f);
 		car.draw(gl);
 
 		// Draw the light
 		gl.glPushMatrix();
 		gl.glScalef(0.3f,0.3f,0.3f);
-		gl.glTranslatef(-7.0f,0.0f,0.0f);
+		gl.glTranslatef(-7.0f,-1.0f,0.0f);
 		streetlight.draw(gl);
 		gl.glPopMatrix();
 
 		//Draw Cube 1
 		gl.glPushMatrix();
 		gl.glTranslatef(-2.5f,0,0.0f);
-		cube.draw(gl);
+		//cube.draw(gl);
 		gl.glPopMatrix();
 
 		//Draw Cube 2
 		gl.glPushMatrix();
 		gl.glTranslatef(2.5f,0,0.0f);
-		cube2.draw(gl);
+		//cube2.draw(gl);
 		gl.glPopMatrix();
 
 		//Draw test
@@ -158,7 +164,7 @@ public class MyOpenGLRenderer implements Renderer {
 		 */
 
 		gl.glPushMatrix();
-		//gl.glTranslatef(0.12f,3.8f,0.0f);
+		gl.glTranslatef(0.0f,-1.0f,0.0f);
 		//gl.glScalef(0.03f,0.03f,0.03f);
 		ground.draw(gl);
 		gl.glPopMatrix();
