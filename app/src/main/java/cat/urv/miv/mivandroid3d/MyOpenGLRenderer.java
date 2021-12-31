@@ -72,14 +72,15 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Light 3
 		l2 = new Light(gl, GL10.GL_LIGHT2);
-		l2.setPosition(new float[]{0.12f,3.5f,0.0f,1.0f});
-		l2.setAmbientColor(new float[]{0.5f,0.5f,0.5f});
-		l2.setDiffuseColor(new float[]{0.5f,0.5f,0.5f});
-		gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-0.2f,-6.0f}));
-		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-5.2f,-3.0f}));
-		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_CUTOFF,30);
-		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_EXPONENT,1.0f);
-		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_LINEAR_ATTENUATION, 1);
+		//l2.setPosition(new float[]{0.12f,3.5f,0.0f,1.0f});
+		l2.setPosition(new float[]{0.0f,0.0f,0.0f,1.0f});
+		l2.setAmbientColor(new float[]{1.0f,1.0f,1.0f});
+		l2.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
+		gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-1.0f,0.0f}));
+		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,1.0f,0.0f}));
+		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_CUTOFF,35);
+		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_EXPONENT,5.0f);
+		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_LINEAR_ATTENUATION, 2);
 		l2.enable();
 
 		// Camera
@@ -98,7 +99,7 @@ public class MyOpenGLRenderer implements Renderer {
 				0);
 
 		// Ambient Light
-		gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{0.7f,0.7f,0.7f}));
+		gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f}));
 
 		// Start functionality switcher
 		//StateManager.start(this, PS);
@@ -120,7 +121,7 @@ public class MyOpenGLRenderer implements Renderer {
 		Vertex4[] center = CameraManager.look();
 		//gl.glPushMatrix();
 		// Lights
-		l2.setPosition(new float[]{0.12f-center[0].get(0),3.5f-center[0].get(1),0.0f-center[0].get(2),1.0f});
+		l2.setPosition(new float[]{0.12f-center[0].get(0),3.7f-center[0].get(1),-10.7f-center[0].get(2),1.0f});
 		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f-center[1].get(0),-0.2f-center[1].get(1),-6.0f-center[1].get(2)}));
 		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f+1,-0.2f-1,-6.0f}));
 		if ( (Math.floor(Math.random()*3+1)) == 1 ) {
@@ -138,7 +139,7 @@ public class MyOpenGLRenderer implements Renderer {
 		// Draw the light
 		gl.glPushMatrix();
 		gl.glScalef(0.3f,0.3f,0.3f);
-		gl.glTranslatef(-7.0f,-1.0f,0.0f);
+		gl.glTranslatef(-7.0f,0.1f,0.0f);
 		streetlight.draw(gl);
 		gl.glPopMatrix();
 
@@ -164,7 +165,7 @@ public class MyOpenGLRenderer implements Renderer {
 		 */
 
 		gl.glPushMatrix();
-		gl.glTranslatef(0.0f,-1.0f,0.0f);
+		gl.glTranslatef(0.0f,0.1f,0.0f);
 		//gl.glScalef(0.03f,0.03f,0.03f);
 		ground.draw(gl);
 		gl.glPopMatrix();
