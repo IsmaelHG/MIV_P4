@@ -1,13 +1,10 @@
 package cat.urv.miv.mivandroid3d;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.microedition.khronos.opengles.GL10;
 
 

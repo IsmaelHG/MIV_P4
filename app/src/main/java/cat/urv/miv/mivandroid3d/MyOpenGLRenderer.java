@@ -2,6 +2,7 @@ package cat.urv.miv.mivandroid3d;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL11;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
@@ -15,6 +16,7 @@ public class MyOpenGLRenderer implements Renderer {
 	private Context context;
 	private Object3D car, cube, cube2, streetlight, earth, ground;
 	private Light l0, l1, l2;
+	private SkyBox mySkyBox;
 
 	// P4
 	private GL10 gl;
@@ -28,6 +30,8 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Image Background color
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+
+		gl.glEnable(GL11.GL_TEXTURE_2D);
 
 		//Enable Depth Testing
 		gl.glEnable(GL10.GL_DEPTH_TEST);
@@ -76,6 +80,7 @@ public class MyOpenGLRenderer implements Renderer {
 		l2.setPosition(new float[]{0.0f,0.0f,0.0f,1.0f});
 		l2.setAmbientColor(new float[]{1.0f,1.0f,1.0f});
 		l2.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
+		//gl.glLightfv(GL10.GL_LIGHT0,GL10.GL_SPECULAR, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f,1.0f}));
 		gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-1.0f,0.0f}));
 		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,1.0f,0.0f}));
 		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_CUTOFF,35);
@@ -103,6 +108,20 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Start functionality switcher
 		//StateManager.start(this, PS);
+		prepare_skybox((GL11) gl, context);
+
+	}
+
+	public void prepare_skybox(GL11 gl, Context context){
+		int[] skybox_textures = new int[6];
+		skybox_textures[0] = R.drawable.posx;
+		skybox_textures[1] = R.drawable.negx;
+		skybox_textures[2] = R.drawable.posy;
+		skybox_textures[3] = R.drawable.negy;
+		skybox_textures[4] = R.drawable.posz;
+		skybox_textures[5] = R.drawable.negz;
+		mySkyBox = new SkyBox();
+		mySkyBox.load_skybox(gl, context, skybox_textures);
 
 	}
 
@@ -119,6 +138,10 @@ public class MyOpenGLRenderer implements Renderer {
 		// Cmaera and lights
 		// Camera
 		Vertex4[] center = CameraManager.look();
+		gl.glPushMatrix();
+		gl.glScalef(10, 10, 10);
+		mySkyBox.drawSkybox(gl);
+		gl.glPopMatrix();
 		//gl.glPushMatrix();
 		// Lights
 		l2.setPosition(new float[]{0.12f-center[0].get(0),3.7f-center[0].get(1),-10.7f-center[0].get(2),1.0f});
@@ -133,42 +156,39 @@ public class MyOpenGLRenderer implements Renderer {
 		//gl.glPopMatrix();
 
 		//Draw the car
+		gl.glPushMatrix();
 		gl.glTranslatef(0,-0.7f,-10.0f);
 		car.draw(gl);
+		gl.glPopMatrix();
 
 		// Draw the light
 		gl.glPushMatrix();
 		gl.glScalef(0.3f,0.3f,0.3f);
-		gl.glTranslatef(-7.0f,0.1f,0.0f);
+		//gl.glTranslatef(-7.0f,0.1f,0.0f);
+		gl.glTranslatef(-7.0f,-2.3f,-33.3f);
 		streetlight.draw(gl);
 		gl.glPopMatrix();
 
 		//Draw Cube 1
 		gl.glPushMatrix();
-		gl.glTranslatef(-2.5f,0,0.0f);
+		gl.glTranslatef(-2.5f,-0.7f,-10.0f);
 		//cube.draw(gl);
 		gl.glPopMatrix();
 
 		//Draw Cube 2
 		gl.glPushMatrix();
-		gl.glTranslatef(2.5f,0,0.0f);
+		gl.glTranslatef(2.5f,-0.7f,-10.0f);
 		//cube2.draw(gl);
 		gl.glPopMatrix();
 
-		//Draw test
-		/*
-		gl.glPushMatrix();
-		gl.glTranslatef(0.12f,3.8f,0.0f);
-		gl.glScalef(0.03f,0.03f,0.03f);
-		earth.draw(gl);
-		gl.glPopMatrix();
-		 */
 
 		gl.glPushMatrix();
-		gl.glTranslatef(0.0f,0.1f,0.0f);
+		gl.glTranslatef(0.0f,-0.6f,-10.0f);
 		//gl.glScalef(0.03f,0.03f,0.03f);
 		ground.draw(gl);
 		gl.glPopMatrix();
+
+
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -183,6 +203,9 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Select the modelview matrix
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+		gl.glEnable( GL10.GL_BLEND );
+		gl.glEnable( GL10.GL_BLEND );
 	}
 
 }
