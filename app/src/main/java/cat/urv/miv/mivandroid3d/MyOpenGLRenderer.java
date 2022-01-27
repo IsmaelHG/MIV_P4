@@ -188,6 +188,8 @@ public class MyOpenGLRenderer implements Renderer {
 		ground.draw(gl);
 		gl.glPopMatrix();
 
+		gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
 
 	}
 
