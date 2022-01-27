@@ -189,8 +189,6 @@ public class MyOpenGLRenderer implements Renderer {
 		gl.glPopMatrix();
 
 		gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
