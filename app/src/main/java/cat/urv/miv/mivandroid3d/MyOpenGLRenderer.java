@@ -77,7 +77,7 @@ public class MyOpenGLRenderer implements Renderer {
 		FloatBuffer fog_color;
 		ByteBuffer auxiliary;
 
-		gl.glFogf(GL10.GL_FOG_MODE, GL10.GL_LINEAR);
+		gl.glFogf(GL10.GL_FOG_MODE, GL10.GL_EXP);
 		auxiliary = ByteBuffer.allocateDirect(4*4);
 		auxiliary.order(ByteOrder.nativeOrder());
 		fog_color = auxiliary.asFloatBuffer();
@@ -87,7 +87,7 @@ public class MyOpenGLRenderer implements Renderer {
 		fog_color.position(0);
 		gl.glFogfv(GL10.GL_FOG_COLOR, fog_color);
 		gl.glFogf(GL10.GL_FOG_DENSITY, 0.01f);
-		gl.glFogf(GL10.GL_FOG_START, 10f);
+		gl.glFogf(GL10.GL_FOG_START, 1f);
 		gl.glFogf(GL10.GL_FOG_END, 100f);
 		gl.glEnable(GL10.GL_FOG);
 
