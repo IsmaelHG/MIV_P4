@@ -178,4 +178,21 @@ public class Object3D {
 		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 		//////////////////////// NEW ////////////////////////////////
 	}
+
+	public void setTexture(GL10 gl, Context context, int resource_id) {
+		Texture text = new Texture(gl,context,resource_id);
+		textures = text.getTexture();
+
+		//float[] texCoords = new float[] {0, 1, 0, 0, 1, 0, 1, 1};
+		float[] texCoords = new float[] {0, 0, 1, 1};
+
+		ByteBuffer vbb = ByteBuffer.allocateDirect(texCoords.length * 8);
+		vbb.order(ByteOrder.nativeOrder());
+		texcoordBuffer = vbb.asFloatBuffer();
+		texcoordBuffer.put(texCoords);
+		texcoordBuffer.put(texCoords);
+		texcoordBuffer.position(0);
+
+		textureEnabled = true;
+	}
 }

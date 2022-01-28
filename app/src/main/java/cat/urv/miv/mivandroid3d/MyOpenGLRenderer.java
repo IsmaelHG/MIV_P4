@@ -56,45 +56,48 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Ground
 		ground = new Object3D(context, R.raw.plane);
+		//ground.setTexture(gl,context,R.drawable.rock_wall_n7_s_t6_k20_c_256x256);
 
 		// test
 		//earth = new Object3D(context, R.raw.earth);
 
-        // Light 0
-        l0 = new Light(gl, GL10.GL_LIGHT0);
-        l0.setPosition(new float[]{2.5f,0.0f,0.0f,0.0f});
-        l0.setAmbientColor(new float[]{0.2f,0.2f,0.2f});
-        l0.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
-        //l0.enable();
+		// Light 0
+		l0 = new Light(gl, GL10.GL_LIGHT0);
+		l0.setPosition(new float[]{0.0f,0.0f,0.0f,1.0f});
+		l0.setAmbientColor(new float[]{1.0f,1.0f,1.0f});
+		l0.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
+		gl.glLightfv(GL10.GL_LIGHT0,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-1.0f,0.0f}));
+		gl.glLightf(GL10.GL_LIGHT0,GL10.GL_SPOT_CUTOFF,35);
+		gl.glLightf(GL10.GL_LIGHT0,GL10.GL_SPOT_EXPONENT,5.0f);
+		gl.glLightf(GL10.GL_LIGHT0,GL10.GL_LINEAR_ATTENUATION, 2);
+		l0.enable();
 
-		// Light 1
+		// Light 0
 		l1 = new Light(gl, GL10.GL_LIGHT1);
-		l1.setPosition(new float[]{-2.5f,0.0f,0.0f,0.0f});
-		l1.setAmbientColor(new float[]{0.2f,0.2f,0.2f});
-		l1.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
-		//l1.enable();
-
-		// Light 3
-		l2 = new Light(gl, GL10.GL_LIGHT2);
-		//l2.setPosition(new float[]{0.12f,3.5f,0.0f,1.0f});
-		l2.setPosition(new float[]{0.0f,0.0f,0.0f,1.0f});
-		l2.setAmbientColor(new float[]{1.0f,1.0f,1.0f});
-		l2.setDiffuseColor(new float[]{1.0f,1.0f,1.0f});
-		//gl.glLightfv(GL10.GL_LIGHT0,GL10.GL_SPECULAR, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f,1.0f}));
-		gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-1.0f,0.0f}));
-		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,1.0f,0.0f}));
-		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_CUTOFF,35);
-		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_SPOT_EXPONENT,5.0f);
-		gl.glLightf(GL10.GL_LIGHT2,GL10.GL_LINEAR_ATTENUATION, 2);
-		l2.enable();
+		l1.setPosition(new float[]{0.0f,0.0f,0.0f,1.0f});
+		l1.setAmbientColor(new float[]{1.0f,0.0f,0.0f});
+		l1.setDiffuseColor(new float[]{1.0f,0.0f,0.0f});
+		gl.glLightfv(GL10.GL_LIGHT1,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f,-1.0f,0.0f}));
+		gl.glLightf(GL10.GL_LIGHT1,GL10.GL_SPOT_CUTOFF,25);
+		gl.glLightf(GL10.GL_LIGHT1,GL10.GL_SPOT_EXPONENT,5.0f);
+		gl.glLightf(GL10.GL_LIGHT1,GL10.GL_LINEAR_ATTENUATION, 2);
+		l1.enable();
 
 		// Camera
 		CameraManager.start(gl);
 		// Set second camera
+		/**
 		CameraManager.setCamPosition(new Vertex4(7.2f, 4.7f, -12.3f, 1.0f),
 				new Vertex4(-0.75f, -0.2f, 0.62f, 0.0f),
 				new Vertex4(-0.15f, 0.9f, 0.13f, 0.0f),
 				new Vertex4(-0.65f, 0.0f, -0.75f, 0.0f),
+				1);
+		**/
+
+		CameraManager.setCamPosition(new Vertex4(0.0f, 2.0f, 0.0f, 1.0f),
+				new Vertex4(0.0f, 0.0f, -1.0f, 0.0f),
+				new Vertex4(0.0f, 1.0f, 0.0f, 0.0f),
+				new Vertex4(1.0f, 0.0f, 0.0f, 0.0f),
 				1);
 
 		CameraManager.setCamPosition(new Vertex4(0.0f, 2.0f, 0.0f, 1.0f),
@@ -104,7 +107,7 @@ public class MyOpenGLRenderer implements Renderer {
 				0);
 
 		// Ambient Light
-		gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{1.0f,1.0f,1.0f}));
+		gl.glLightModelfv(GL10.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(new float[]{0.5f,0.5f,0.5f}));
 
 		// Start functionality switcher
 		//StateManager.start(this, PS);
@@ -114,12 +117,12 @@ public class MyOpenGLRenderer implements Renderer {
 
 	public void prepare_skybox(GL11 gl, Context context){
 		int[] skybox_textures = new int[6];
-		skybox_textures[0] = R.drawable.img1;
-		skybox_textures[1] = R.drawable.img2;
-		skybox_textures[2] = R.drawable.img3;
-		skybox_textures[3] = R.drawable.img4;
-		skybox_textures[4] = R.drawable.img5;
-		skybox_textures[5] = R.drawable.img6;
+		skybox_textures[0] = R.drawable.posx;
+		skybox_textures[1] = R.drawable.negx;
+		skybox_textures[2] = R.drawable.posy;
+		skybox_textures[3] = R.drawable.negy;
+		skybox_textures[4] = R.drawable.posz;
+		skybox_textures[5] = R.drawable.negz;
 		mySkyBox = new SkyBox();
 		mySkyBox.load_skybox(gl, context, skybox_textures);
 
@@ -132,28 +135,19 @@ public class MyOpenGLRenderer implements Renderer {
 
 		gl.glLoadIdentity();
 
-		// Camara set up
-
-
-		// Cmaera and lights
 		// Camera
+		CameraManager.moving_camera(1);
 		Vertex4[] center = CameraManager.look();
+
 		gl.glPushMatrix();
-		gl.glScalef(30, 30, 30);
+		gl.glScalef(80, 80, 80);
 		mySkyBox.drawSkybox(gl);
 		gl.glPopMatrix();
-		//gl.glPushMatrix();
+
 		// Lights
-		l2.setPosition(new float[]{0.12f-center[0].get(0),3.7f-center[0].get(1),-10.7f-center[0].get(2),1.0f});
-		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f-center[1].get(0),-0.2f-center[1].get(1),-6.0f-center[1].get(2)}));
-		//gl.glLightfv(GL10.GL_LIGHT2,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(new float[]{0.0f+1,-0.2f-1,-6.0f}));
-		if ( (Math.floor(Math.random()*3+1)) == 1 ) {
-			System.out.println(center[1]);
-		}
+		l0.setPosition(new float[]{0.12f-center[0].get(0),3.7f-center[0].get(1),-10.7f-center[0].get(2),1.0f});
+		l1.setPosition(new float[]{1.7f-center[0].get(0),1.7f-center[0].get(1),-10f-center[0].get(2),1.0f});
 
-		//l2.draw();
-
-		//gl.glPopMatrix();
 
 		//Draw the car
 		gl.glPushMatrix();
@@ -164,27 +158,19 @@ public class MyOpenGLRenderer implements Renderer {
 		// Draw the light
 		gl.glPushMatrix();
 		gl.glScalef(0.3f,0.3f,0.3f);
-		//gl.glTranslatef(-7.0f,0.1f,0.0f);
 		gl.glTranslatef(-7.0f,-2.3f,-33.3f);
 		streetlight.draw(gl);
 		gl.glPopMatrix();
 
 		//Draw Cube 1
 		gl.glPushMatrix();
-		gl.glTranslatef(-2.5f,-0.7f,-10.0f);
-		//cube.draw(gl);
+		gl.glTranslatef(1.5f,-0.28f,-9.0f);
+		gl.glScalef(0.3f,0.3f,0.3f);
+		cube.draw(gl);
 		gl.glPopMatrix();
-
-		//Draw Cube 2
-		gl.glPushMatrix();
-		gl.glTranslatef(2.5f,-0.7f,-10.0f);
-		//cube2.draw(gl);
-		gl.glPopMatrix();
-
 
 		gl.glPushMatrix();
 		gl.glTranslatef(0.0f,-0.6f,-10.0f);
-		//gl.glScalef(0.03f,0.03f,0.03f);
 		ground.draw(gl);
 		gl.glPopMatrix();
 

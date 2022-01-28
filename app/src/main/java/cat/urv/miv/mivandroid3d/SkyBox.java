@@ -35,7 +35,7 @@ public class SkyBox {
         gl.glTranslatef(0, 0, 1);
         faces[5].draw(gl);
         gl.glTranslatef(0, 0, -2);
-        gl.glRotatef(-180,0, 1, 0);
+        gl.glRotatef(180,0, 1, 0);
         faces[4].draw(gl);
         gl.glPopMatrix();
         gl.glPushMatrix();

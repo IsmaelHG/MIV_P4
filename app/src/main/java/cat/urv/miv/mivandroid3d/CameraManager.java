@@ -18,12 +18,47 @@ public class CameraManager {
     private static int current_camera_number = FIRST_CAMERA;
     private static boolean started_cameras = false;
 
+    public static double[] last_modification;
+    public static int[] curr_movement;
+    public static boolean[] curr_dir;
+
+    public static int MAX_MOVEMENT = 100;
+
     public static void start(GL10 gl) {
-        cameras = new Camera [MAX_NUM_CAMERAS];
-        for (int i=0; i<MAX_NUM_CAMERAS; i++) cameras[i] = new Camera(gl);
+        cameras = new Camera[MAX_NUM_CAMERAS];
+        last_modification = new double[MAX_NUM_CAMERAS];
+        curr_movement = new int[MAX_NUM_CAMERAS];
+        curr_dir = new boolean[MAX_NUM_CAMERAS];
+        for (int i = 0; i < MAX_NUM_CAMERAS; i++) {
+            cameras[i] = new Camera(gl);
+            last_modification[i] = System.currentTimeMillis();
+            curr_movement[i] = 0;
+            curr_dir[i] = true;
+        }
         current_camera = cameras[FIRST_CAMERA];
         started_cameras = true;
 
+
+    }
+
+    public static void moving_camera(int cam_num) {
+        if (cam_num < MAX_NUM_CAMERAS) {
+            double current_modification = System.currentTimeMillis();
+            if (current_modification-last_modification[cam_num]>CameraManager.MOVE_FREQUENCY) {
+                    if (curr_dir[cam_num]) {
+                        cameras[cam_num].moveForward(MOVE_SPEED);
+                    } else {
+                        cameras[cam_num].moveBackward(MOVE_SPEED);
+                    }
+                    if (curr_movement[cam_num] > MAX_MOVEMENT) {
+                        curr_movement[cam_num] = 0;
+                        curr_dir[cam_num] = !curr_dir[cam_num];
+                    } else {
+                        curr_movement[cam_num]++;
+                    }
+
+            }
+        }
 
     }
 
