@@ -15,13 +15,15 @@ public class MainActivity extends Activity {
         setContentView(view);
     }
 
-    public double last_modification = System.currentTimeMillis();
+    // Ultimo movimiento realizado
+    public double lastupdate = System.currentTimeMillis();
 
     @Override
     public boolean onKeyDown (int keyCode, KeyEvent event){
-        double current_modification = System.currentTimeMillis();
-        if (current_modification-last_modification>CameraManager.MOVE_FREQUENCY) {
+        double time = System.currentTimeMillis();
+        if (time-lastupdate >CameraManager.MOVE_FREQUENCY) {
             switch (keyCode) {
+                    // MOVIMIENTOS
                 case KeyEvent.KEYCODE_DPAD_LEFT:
                     CameraManager.moveLeft(CameraManager.MOVE_SPEED);
                     break;
@@ -40,40 +42,33 @@ public class MainActivity extends Activity {
                 case KeyEvent.KEYCODE_S:
                     CameraManager.moveBackward(CameraManager.MOVE_SPEED);
                     break;
+
+                    // EJES DE ROTACION
                 case KeyEvent.KEYCODE_Y:
                     CameraManager.yaw(CameraManager.ROTATE_ANGLE);
-                    break;
-                case KeyEvent.KEYCODE_R:
-                    CameraManager.roll(CameraManager.ROTATE_ANGLE);
-                    break;
-                case KeyEvent.KEYCODE_P:
-                    CameraManager.pitch(CameraManager.ROTATE_ANGLE);
-                    break;
-                case KeyEvent.KEYCODE_C:
-                    CameraManager.switch_camera();
                     break;
                 case KeyEvent.KEYCODE_H:
                     CameraManager.inverse_yaw(CameraManager.ROTATE_ANGLE);
                     break;
-                case KeyEvent.KEYCODE_L:
-                    CameraManager.inverse_pitch(CameraManager.ROTATE_ANGLE);
+                case KeyEvent.KEYCODE_R:
+                    CameraManager.roll(CameraManager.ROTATE_ANGLE);
                     break;
                 case KeyEvent.KEYCODE_F:
                     CameraManager.inverse_roll(CameraManager.ROTATE_ANGLE);
                     break;
+                case KeyEvent.KEYCODE_O:
+                    CameraManager.pitch(CameraManager.ROTATE_ANGLE);
+                    break;
+                case KeyEvent.KEYCODE_L:
+                    CameraManager.inverse_pitch(CameraManager.ROTATE_ANGLE);
+                    break;
+
+                    // CAMBIO DE CAMARA
+                case KeyEvent.KEYCODE_C:
+                    CameraManager.switch_camera();
+                    break;
                 case KeyEvent.KEYCODE_1:
                     break;
-                /*
-                case KeyEvent.KEYCODE_2:
-                    StateManager.switchDLight();
-                    break;
-                case KeyEvent.KEYCODE_3:
-                    StateManager.switchSkybox();
-                    break;
-                case KeyEvent.KEYCODE_4:
-                    StateManager.switchPS();
-                    break;
-                */
             }
             return true;
         }

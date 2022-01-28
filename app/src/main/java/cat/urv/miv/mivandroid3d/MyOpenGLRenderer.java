@@ -50,7 +50,6 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Ground
 		ground = new Object3D(context, R.raw.plane);
-		//ground.setTexture(gl,context,R.drawable.rock_wall_n7_s_t6_k20_c_256x256);
 
 		// test
 		//earth = new Object3D(context, R.raw.earth);
@@ -82,6 +81,8 @@ public class MyOpenGLRenderer implements Renderer {
 		auxiliary = ByteBuffer.allocateDirect(4*4);
 		auxiliary.order(ByteOrder.nativeOrder());
 		fog_color = auxiliary.asFloatBuffer();
+
+		// Niebla con un ligero color gris
 		fog_color.put(new float[] {0.2f, 0.2f, 0.2f, 1.0f});
 		fog_color.position(0);
 		gl.glFogfv(GL10.GL_FOG_COLOR, fog_color);
@@ -142,7 +143,7 @@ public class MyOpenGLRenderer implements Renderer {
 
 		// Dibujamos el skybox
 		gl.glPushMatrix();
-		gl.glScalef(80, 80, 80);
+		gl.glScalef(70, 70, 70);
 		mySkyBox.drawSkybox(gl);
 		// Para que se puedan mostrar las texturas 2D
 		gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -176,6 +177,7 @@ public class MyOpenGLRenderer implements Renderer {
 		// Dibujamos el suelo
 		gl.glPushMatrix();
 		gl.glTranslatef(0.0f,-0.6f,-10.0f);
+		gl.glScalef(3f,3f,3f);
 		ground.draw(gl);
 		gl.glPopMatrix();
 

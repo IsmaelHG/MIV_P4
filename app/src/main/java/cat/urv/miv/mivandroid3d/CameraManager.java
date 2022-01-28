@@ -23,7 +23,7 @@ public class CameraManager {
     public static int[] curr_movement;
     public static boolean[] curr_dir;
 
-    public static int MAX_MOVEMENT = 150;
+    public static int MAX_MOVEMENT = 170;
 
     public static void start(GL10 gl) {
         cameras = new Camera[MAX_NUM_CAMERAS];
