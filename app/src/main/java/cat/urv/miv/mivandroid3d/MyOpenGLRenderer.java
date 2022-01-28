@@ -114,12 +114,12 @@ public class MyOpenGLRenderer implements Renderer {
 
 	public void prepare_skybox(GL11 gl, Context context){
 		int[] skybox_textures = new int[6];
-		skybox_textures[0] = R.drawable.posx;
-		skybox_textures[1] = R.drawable.negx;
-		skybox_textures[2] = R.drawable.posy;
-		skybox_textures[3] = R.drawable.negy;
-		skybox_textures[4] = R.drawable.posz;
-		skybox_textures[5] = R.drawable.negz;
+		skybox_textures[0] = R.drawable.img1;
+		skybox_textures[1] = R.drawable.img2;
+		skybox_textures[2] = R.drawable.img3;
+		skybox_textures[3] = R.drawable.img4;
+		skybox_textures[4] = R.drawable.img5;
+		skybox_textures[5] = R.drawable.img6;
 		mySkyBox = new SkyBox();
 		mySkyBox.load_skybox(gl, context, skybox_textures);
 
@@ -139,7 +139,7 @@ public class MyOpenGLRenderer implements Renderer {
 		// Camera
 		Vertex4[] center = CameraManager.look();
 		gl.glPushMatrix();
-		gl.glScalef(10, 10, 10);
+		gl.glScalef(30, 30, 30);
 		mySkyBox.drawSkybox(gl);
 		gl.glPopMatrix();
 		//gl.glPushMatrix();
