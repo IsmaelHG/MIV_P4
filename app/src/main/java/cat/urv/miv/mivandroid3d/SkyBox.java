@@ -13,7 +13,7 @@ public class SkyBox {
 
     public SkyBox(){};
 
-    public void load_skybox(GL11 gl, Context context, int[] faces_textures) {
+    public void load_skybox(GL10 gl, Context context, int[] faces_textures) {
 
         //Generate and fill the texture with the image
 

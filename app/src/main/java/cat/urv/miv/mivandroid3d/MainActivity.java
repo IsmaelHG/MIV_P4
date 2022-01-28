@@ -61,10 +61,9 @@ public class MainActivity extends Activity {
                 case KeyEvent.KEYCODE_F:
                     CameraManager.inverse_roll(CameraManager.ROTATE_ANGLE);
                     break;
-                /*
                 case KeyEvent.KEYCODE_1:
-                    StateManager.switchFog();
                     break;
+                /*
                 case KeyEvent.KEYCODE_2:
                     StateManager.switchDLight();
                     break;

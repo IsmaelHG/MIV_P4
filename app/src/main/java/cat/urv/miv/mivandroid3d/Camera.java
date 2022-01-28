@@ -27,11 +27,6 @@ public class Camera {
 	
 	public void moveLeft(float inc) {
 		pos = pos.add( side.normalize().mult(-inc) );
-		System.out.println(pos);
-		System.out.println(forward);
-		System.out.println(up);
-		System.out.println(side);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 
 	public void moveRight(float inc) {
@@ -113,7 +108,7 @@ public class Camera {
 		GLU.gluLookAt(gl, pos.get(0), pos.get(1), pos.get(2), 
 						  center.get(0), center.get(1), center.get(2), 
 						  up.get(0), up.get(1), up.get(2));
-		Vertex4[] centerrotat = {center,up};
-		return centerrotat;
+		// Retornamos la dirección que apunta la camara
+		return new Vertex4[]{center,up};
 	}
 }

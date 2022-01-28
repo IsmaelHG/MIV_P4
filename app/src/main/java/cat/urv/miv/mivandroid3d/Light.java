@@ -35,8 +35,6 @@ public class Light {
 		gl.glLightfv(lightid,GL10.GL_POSITION, posicio);
 	}
 
-
-
 	//To set the light colors
 	public void setAmbientColor(float[] color) {
 		this.ambient = FloatBuffer.wrap(color);
@@ -46,6 +44,14 @@ public class Light {
 	public void setDiffuseColor(float[] color) {
 		this.difuse = FloatBuffer.wrap(color);
 		gl.glLightfv(lightid, GL10.GL_DIFFUSE, difuse);
+	}
+
+	public void setSpotLight(float[] direction, int cutoff, float exponent, int attenuation) {
+		gl.glLightfv(lightid,GL10.GL_SPOT_DIRECTION, FloatBuffer.wrap(direction));
+		gl.glLightf(lightid,GL10.GL_SPOT_CUTOFF,cutoff);
+		gl.glLightf(lightid,GL10.GL_SPOT_EXPONENT,exponent);
+		gl.glLightf(lightid,GL10.GL_LINEAR_ATTENUATION, attenuation);
+
 	}
 
 	public void draw(){

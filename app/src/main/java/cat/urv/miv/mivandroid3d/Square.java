@@ -64,11 +64,6 @@ public class Square {
 	public void setTexture(Texture tex, float[] texCoords) {
 		this.texture = tex;
 
-		/*System.out.println("Texture coordinates:");
-		for (float f: texCoords){
-			System.out.print(" "+f);
-		}*/
-
 		//Move the color list into a buffer
 		ByteBuffer vbb = ByteBuffer.allocateDirect(texCoords.length * 4);
 		vbb.order(ByteOrder.nativeOrder());
@@ -93,7 +88,6 @@ public class Square {
 		if (textureEnabled) {
 			gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 		}
-
 
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.

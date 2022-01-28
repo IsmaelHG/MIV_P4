@@ -3,8 +3,9 @@ package cat.urv.miv.mivandroid3d;
 import javax.microedition.khronos.opengles.GL10;
 
 /*
-Global camera manager, makes transitions between
-MainActivity and Renderer.
+Manejador del sistema de camaras
+
+Permite cambiar entre las diversas camaras configuradas. Por defecto hay 2 camaras
  */
 public class CameraManager {
 
@@ -22,7 +23,7 @@ public class CameraManager {
     public static int[] curr_movement;
     public static boolean[] curr_dir;
 
-    public static int MAX_MOVEMENT = 100;
+    public static int MAX_MOVEMENT = 150;
 
     public static void start(GL10 gl) {
         cameras = new Camera[MAX_NUM_CAMERAS];
@@ -41,15 +42,22 @@ public class CameraManager {
 
     }
 
+    // Metodo para crear un desplazamiento constante
+    // La camara especificada por parametro hara un movimiento hacía atras/adelante
     public static void moving_camera(int cam_num) {
+        // Comprobamos que la camara existe
         if (cam_num < MAX_NUM_CAMERAS) {
+            // Capturamos el tiempo actual
             double current_modification = System.currentTimeMillis();
+            // Si ha pasado un intervalo suficiente de tiempo, procedemos a realizar el movimiento en función de la dirección actual
             if (current_modification-last_modification[cam_num]>CameraManager.MOVE_FREQUENCY) {
                     if (curr_dir[cam_num]) {
                         cameras[cam_num].moveForward(MOVE_SPEED);
                     } else {
                         cameras[cam_num].moveBackward(MOVE_SPEED);
                     }
+
+                    // Tras sobrepasar un cierto limite, la camara cambiara de dirección de movimiento
                     if (curr_movement[cam_num] > MAX_MOVEMENT) {
                         curr_movement[cam_num] = 0;
                         curr_dir[cam_num] = !curr_dir[cam_num];
@@ -63,8 +71,11 @@ public class CameraManager {
     }
 
     public static int switch_camera(){
+        // Pasamos a usar la siguiente camara
         current_camera_number = (current_camera_number + 1)%MAX_NUM_CAMERAS;
         current_camera = cameras[current_camera_number];
+
+        // Retornamos la camara actual
         return current_camera_number;
     }
 

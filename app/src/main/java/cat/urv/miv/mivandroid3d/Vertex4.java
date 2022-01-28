@@ -63,17 +63,5 @@ public class Vertex4 {
 			v.set(i, values[i] * d);
 		return v;
 	}
-	
-	
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append('(');
-		for(int i = 0; i < values.length; i++) {
-			sb.append(values[i]);
-			if (i != values.length - 1)
-				sb.append(", ");
-		}
-		sb.append(')');
-		return sb.toString();
-	}
+
 }
