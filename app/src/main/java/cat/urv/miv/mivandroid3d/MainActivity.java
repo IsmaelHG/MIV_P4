@@ -24,25 +24,26 @@ public class MainActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         double time = System.currentTimeMillis();
         if (time - lastupdate > CameraManager.MOVE_FREQUENCY) {
+            // CONTROLES
             switch (keyCode) {
                 // MOVIMIENTOS
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    CameraManager.moveLeft(CameraManager.MOVE_SPEED);
+                    CameraManager.moveLeft(CameraManager.SPEED);
                     break;
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    CameraManager.moveRight(CameraManager.MOVE_SPEED);
+                    CameraManager.moveRight(CameraManager.SPEED);
                     break;
                 case KeyEvent.KEYCODE_DPAD_UP:
-                    CameraManager.moveUp(CameraManager.MOVE_SPEED);
+                    CameraManager.moveUp(CameraManager.SPEED);
                     break;
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    CameraManager.moveDown(CameraManager.MOVE_SPEED);
+                    CameraManager.moveDown(CameraManager.SPEED);
                     break;
                 case KeyEvent.KEYCODE_W:
-                    CameraManager.moveForward(CameraManager.MOVE_SPEED);
+                    CameraManager.moveForward(CameraManager.SPEED);
                     break;
                 case KeyEvent.KEYCODE_S:
-                    CameraManager.moveBackward(CameraManager.MOVE_SPEED);
+                    CameraManager.moveBackward(CameraManager.SPEED);
                     break;
 
                 // EJES DE ROTACION

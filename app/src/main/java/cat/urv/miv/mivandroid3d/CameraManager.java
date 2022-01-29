@@ -9,50 +9,54 @@ Permite cambiar entre las diversas camaras configuradas. Por defecto hay 2 camar
  */
 public class CameraManager {
 
-    public static int MAX_NUM_CAMERAS = 2;
-    public static int FIRST_CAMERA = 0;
-    public static float MOVE_SPEED = 0.08f;
+    public static int MAX_CAMERAS = 2;
+    public static float SPEED = 0.08f;
     public static float MOVE_FREQUENCY = 20f;
     public static float ROTATE_ANGLE = 2f;
+
     public static double[] last_modification;
+    private static Camera[] cameras;
+    private static Camera current_camera;
+    private static int current_camera_num = 0;
+    private static boolean is_started = false;
+
+    // Para gestionar la animación de la camara
     public static int[] curr_movement;
     public static boolean[] curr_dir;
     public static int MAX_MOVEMENT = 170;
-    private static Camera[] cameras;
-    private static Camera current_camera;
-    private static int current_camera_number = FIRST_CAMERA;
-    private static boolean started_cameras = false;
 
     public static void start(GL10 gl) {
-        cameras = new Camera[MAX_NUM_CAMERAS];
-        last_modification = new double[MAX_NUM_CAMERAS];
-        curr_movement = new int[MAX_NUM_CAMERAS];
-        curr_dir = new boolean[MAX_NUM_CAMERAS];
-        for (int i = 0; i < MAX_NUM_CAMERAS; i++) {
+        // Creamos las camaras
+        cameras = new Camera[MAX_CAMERAS];
+
+        //
+        last_modification = new double[MAX_CAMERAS];
+        curr_movement = new int[MAX_CAMERAS];
+        curr_dir = new boolean[MAX_CAMERAS];
+
+        for (int i = 0; i < MAX_CAMERAS; i++) {
             cameras[i] = new Camera(gl);
             last_modification[i] = System.currentTimeMillis();
             curr_movement[i] = 0;
             curr_dir[i] = true;
         }
-        current_camera = cameras[FIRST_CAMERA];
-        started_cameras = true;
-
-
+        current_camera = cameras[0];
+        is_started = true;
     }
 
     // Metodo para crear un desplazamiento constante
     // La camara especificada por parametro hara un movimiento hacía atras/adelante
     public static void moving_camera(int cam_num) {
         // Comprobamos que la camara existe
-        if (cam_num < MAX_NUM_CAMERAS) {
+        if (cam_num < MAX_CAMERAS) {
             // Capturamos el tiempo actual
             double current_modification = System.currentTimeMillis();
             // Si ha pasado un intervalo suficiente de tiempo, procedemos a realizar el movimiento en función de la dirección actual
             if (current_modification - last_modification[cam_num] > CameraManager.MOVE_FREQUENCY) {
                 if (curr_dir[cam_num]) {
-                    cameras[cam_num].moveForward(MOVE_SPEED);
+                    cameras[cam_num].moveForward(SPEED);
                 } else {
-                    cameras[cam_num].moveBackward(MOVE_SPEED);
+                    cameras[cam_num].moveBackward(SPEED);
                 }
 
                 // Tras sobrepasar un cierto limite, la camara cambiara de dirección de movimiento
@@ -70,78 +74,78 @@ public class CameraManager {
 
     public static int switch_camera() {
         // Pasamos a usar la siguiente camara
-        current_camera_number = (current_camera_number + 1) % MAX_NUM_CAMERAS;
-        current_camera = cameras[current_camera_number];
+        current_camera_num = (current_camera_num + 1) % MAX_CAMERAS;
+        current_camera = cameras[current_camera_num];
 
         // Retornamos la camara actual
-        return current_camera_number;
+        return current_camera_num;
     }
 
     public static void moveLeft(float inc) {
-        if (started_cameras)
+        if (is_started)
             current_camera.moveLeft(inc);
     }
 
     public static void moveRight(float inc) {
-        if (started_cameras)
+        if (is_started)
             current_camera.moveRight(inc);
     }
 
     public static void moveUp(float inc) {
-        if (started_cameras)
+        if (is_started)
             current_camera.moveUp(inc);
     }
 
     public static void moveDown(float inc) {
-        if (started_cameras)
+        if (is_started)
             current_camera.moveDown(inc);
     }
 
     public static void moveForward(float inc) {
-        if (started_cameras)
+        if (is_started)
             current_camera.moveForward(inc);
     }
 
     public static void moveBackward(float inc) {
-        if (started_cameras)
+        if (is_started)
             current_camera.moveBackward(inc);
     }
 
     public static void yaw(float angle) {
-        if (started_cameras)
+        if (is_started)
             current_camera.yaw(angle);
 
     }
 
     public static void inverse_yaw(float angle) {
-        if (started_cameras)
+        if (is_started)
             current_camera.inverse_yaw(angle);
 
     }
 
     public static void pitch(float angle) {
-        if (started_cameras)
+        if (is_started)
             current_camera.pitch(angle);
     }
 
     public static void inverse_pitch(float angle) {
-        if (started_cameras)
+        if (is_started)
             current_camera.inverse_pitch(angle);
     }
 
     public static void roll(float angle) {
-        if (started_cameras)
+        if (is_started)
             current_camera.roll(angle);
     }
 
     public static void inverse_roll(float angle) {
-        if (started_cameras)
+        if (is_started)
             current_camera.inverse_roll(angle);
     }
 
     public static void setCamPosition(Vertex4 pos, Vertex4 forward, Vertex4 up, Vertex4 side, int cam) {
-        if (started_cameras)
-            if ((cam < MAX_NUM_CAMERAS) && (cam >= 0)) {
+        if (is_started)
+            if ((cam < MAX_CAMERAS) && (cam >= 0)) {
                 cameras[cam].setPosition(pos, forward, up, side);
             }
     }

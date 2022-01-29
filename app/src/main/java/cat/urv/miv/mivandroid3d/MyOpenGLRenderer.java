@@ -28,7 +28,7 @@ public class MyOpenGLRenderer implements Renderer {
         // Image Background color
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 
-        gl.glEnable(GL11.GL_TEXTURE_2D);
+        gl.glEnable(GL10.GL_TEXTURE_2D);
 
         //Enable Depth Testing
         gl.glEnable(GL10.GL_DEPTH_TEST);
