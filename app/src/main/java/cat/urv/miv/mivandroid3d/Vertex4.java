@@ -24,8 +24,7 @@ public class Vertex4 {
 
     public float module() {
         float length = 0.0f;
-        for (int i = 0; i < values.length; i++)
-            length += values[i] * values[i];
+        for (float value : values) length += value * value;
         return (float) Math.sqrt(length);
     }
 
@@ -38,12 +37,11 @@ public class Vertex4 {
     }
 
     public Vertex4 cross3(Vertex4 o) {
-        Vertex4 result = new Vertex4(
+        return new Vertex4(
                 values[1] * o.values[2] - values[2] * o.values[1],
                 values[2] * o.values[0] - values[0] * o.values[2],
                 values[0] * o.values[1] - values[1] * o.values[0],
                 0.0f);
-        return result;
     }
 
     public Vertex4 add(Vertex4 o) {
