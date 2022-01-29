@@ -1,17 +1,21 @@
 package cat.urv.miv.mivandroid3d;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.microedition.khronos.opengles.GL10;
 
 
 public class Texture {
 
-    private int[] textures=new int[1];
-    private int width, height;
+    private final int[] textures = new int[1];
+    private final int width;
+    private final int height;
 
 
     public Texture(GL10 gl, Context context, int resource_id) {
@@ -56,7 +60,7 @@ public class Texture {
         return textures;
     }
 
-    int getWidth(){
+    int getWidth() {
         return width;
     }
 

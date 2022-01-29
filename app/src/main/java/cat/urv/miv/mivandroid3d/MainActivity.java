@@ -6,7 +6,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 public class MainActivity extends Activity {
-    /** Called when the activity is first created. */
+    // Ultimo movimiento realizado
+    public double lastupdate = System.currentTimeMillis();
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,15 +20,12 @@ public class MainActivity extends Activity {
         setContentView(view);
     }
 
-    // Ultimo movimiento realizado
-    public double lastupdate = System.currentTimeMillis();
-
     @Override
-    public boolean onKeyDown (int keyCode, KeyEvent event){
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         double time = System.currentTimeMillis();
-        if (time-lastupdate >CameraManager.MOVE_FREQUENCY) {
+        if (time - lastupdate > CameraManager.MOVE_FREQUENCY) {
             switch (keyCode) {
-                    // MOVIMIENTOS
+                // MOVIMIENTOS
                 case KeyEvent.KEYCODE_DPAD_LEFT:
                     CameraManager.moveLeft(CameraManager.MOVE_SPEED);
                     break;
@@ -43,7 +45,7 @@ public class MainActivity extends Activity {
                     CameraManager.moveBackward(CameraManager.MOVE_SPEED);
                     break;
 
-                    // EJES DE ROTACION
+                // EJES DE ROTACION
                 case KeyEvent.KEYCODE_Y:
                     CameraManager.yaw(CameraManager.ROTATE_ANGLE);
                     break;
@@ -63,7 +65,7 @@ public class MainActivity extends Activity {
                     CameraManager.inverse_pitch(CameraManager.ROTATE_ANGLE);
                     break;
 
-                    // CAMBIO DE CAMARA
+                // CAMBIO DE CAMARA
                 case KeyEvent.KEYCODE_C:
                     CameraManager.switch_camera();
                     break;
@@ -71,8 +73,7 @@ public class MainActivity extends Activity {
                     break;
             }
             return true;
-        }
-        else return false;
+        } else return false;
 
     }
 }
